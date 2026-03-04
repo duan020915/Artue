@@ -39,6 +39,7 @@ export default function Hero() {
     const [hoverHabitus, setHoverHabitus] = useState(false);
     const [hoverAesthetics, setHoverAesthetics] = useState(false);
     const [hoverRecommendation, setHoverRecommendation] = useState(false);
+    const [hoverAsianArt, setHoverAsianArt] = useState(false);
 
     const mainImage = "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&q=80";
     const inkWashSideImage = "https://images.unsplash.com/photo-1762115331515-9740ca3dcd21?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGluayUyMHdhc2glMjBwYWludGluZ3xlbnwwfHwwfHx8MA%3D%3D";
@@ -84,10 +85,56 @@ export default function Hero() {
                         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                         className="flex flex-col gap-[1px] bg-[#111111] overflow-hidden shrink-0 h-full"
                     >
-                        <div className="h-28 lg:h-32 xl:h-40 bg-[#8299D4] shrink-0 min-w-10"></div>
-
                         <div
-                            className="h-28 lg:h-32 xl:h-40 bg-[#111111] border-b border-[#333333] flex flex-col items-center justify-center overflow-hidden relative shrink-0 min-w-10 p-4 cursor-crosshair group"
+                            className="relative overflow-hidden shrink-0"
+                            onMouseEnter={() => setHoverAsianArt(true)}
+                            onMouseLeave={() => setHoverAsianArt(false)}
+                        >
+                            <motion.div
+                                animate={{
+                                    height: hoverAsianArt ? (typeof window !== 'undefined' && window.innerWidth >= 1280 ? 320 : 256) : (typeof window !== 'undefined' && window.innerWidth >= 1280 ? 160 : 128),
+                                    backgroundColor: hoverAsianArt ? "#111111" : "#8299D4"
+                                }}
+                                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                className="w-full flex flex-col items-center justify-center p-4 relative z-20 cursor-crosshair overflow-hidden"
+                            >
+                                <motion.span
+                                    animate={{ y: hoverAsianArt ? -20 : 0, opacity: hoverAsianArt ? 0 : 1 }}
+                                    className="text-[#111111] font-serif uppercase tracking-[0.3em] font-bold text-[10px] lg:text-xs text-center"
+                                >
+                                    Asian Art
+                                </motion.span>
+
+                                <AnimatePresence>
+                                    {hoverAsianArt && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 10 }}
+                                            transition={{ duration: 0.4 }}
+                                            className="absolute inset-0 p-6 flex flex-col justify-center text-[#F4F4F0] text-center"
+                                        >
+                                            <h4 className="font-serif text-sm lg:text-base uppercase mb-4 text-[#8299D4] tracking-widest font-bold">Asian Century</h4>
+                                            <p className="font-sans text-[9px] lg:text-[10px] leading-relaxed tracking-wider font-medium opacity-90">
+                                                Beyond the white cube, we return to the ink, the pigment, and the pulse of the East.
+                                                <br /><br />
+                                                Connecting emerging Asian voices with global collectors.
+                                                <br /><br />
+                                                <span className="text-[#8299D4] font-bold">Artue: Defining the ahead-of-the-curve culture.</span>
+                                            </p>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        </div>
+
+                        <motion.div
+                            animate={{
+                                height: hoverAsianArt ? 0 : (typeof window !== 'undefined' && window.innerWidth >= 1280 ? 160 : 128),
+                                opacity: hoverAsianArt ? 0 : 1
+                            }}
+                            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                            className="bg-[#111111] border-b border-[#333333] flex flex-col items-center justify-center overflow-hidden relative shrink-0 min-w-10 p-4 cursor-crosshair group"
                             onMouseEnter={() => setHoverAesthetics(true)}
                             onMouseLeave={() => setHoverAesthetics(false)}
                         >
@@ -114,7 +161,7 @@ export default function Hero() {
 
                             <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-[#8299D4] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                             <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-[#8299D4] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        </div>
+                        </motion.div>
 
                         {/* Perfectly centered ink wash image */}
                         <div className="flex-1 bg-[#111111] flex items-center justify-center overflow-hidden relative shrink-0 min-w-10 p-4 xl:p-6">
@@ -148,8 +195,8 @@ export default function Hero() {
                                     (새로운 예술의 발견, 자본이 아닌 문화로.)
                                 </span>
                                 <p className="opacity-80 leading-relaxed font-medium text-sm tracking-widest">
-                                    Our AI recommendation engine cuts through the noise of the market, matching your
-                                    personal resonance with emerging contemporary voices.
+                                    Bridging the gap between next-gen collectors and emerging Asian voices.
+                                    Elite curation meets personalized AI to make art discovery as intuitive as your favorite music.
                                 </p>
                             </div>
                         </div>
@@ -185,12 +232,14 @@ export default function Hero() {
                                     <p className="font-sans uppercase tracking-[0.2em] text-[10px] lg:text-xs border-t border-[#F4F4F0] pt-4 w-3/4 mx-auto font-bold opacity-90">Culture Over<br />Capital</p>
                                 </motion.div>
                                 <motion.div initial={{ y: "100%", opacity: 0 }} animate={{ y: hoverManifesto ? "0%" : "100%", opacity: hoverManifesto ? 1 : 0 }} transition={{ duration: 0.4 }} className="absolute inset-0 p-8 flex flex-col justify-center bg-[#111111] text-[#F4F4F0]">
-                                    <h4 className="font-serif text-2xl uppercase mb-6 text-[#E1A140] tracking-tighter">Core Values</h4>
-                                    <ul className="flex flex-col gap-4 font-sans text-[10px] md:text-xs tracking-[0.3em] uppercase font-bold">
-                                        <li className="flex items-center gap-3 border-b border-[#333333] pb-2"><span className="w-2 h-2 bg-[#F5A382] inline-block"></span> Intuitive Collecting</li>
-                                        <li className="flex items-center gap-3 border-b border-[#333333] pb-2"><span className="w-2 h-2 bg-[#C13028] inline-block"></span> Culture & Identity</li>
-                                        <li className="flex items-center gap-3"><span className="w-2 h-2 bg-[#008050] inline-block"></span> Personal Resonance</li>
-                                    </ul>
+                                    <h4 className="font-serif text-xl lg:text-2xl uppercase mb-6 text-[#C13028] tracking-tighter">Culture, Not Capital.</h4>
+                                    <p className="font-sans text-[10px] lg:text-xs tracking-widest uppercase font-bold leading-relaxed opacity-90">
+                                        Art belongs to the curious, not just the established.
+                                        <br /><br />
+                                        We believe art discovery should feel like a personal resonance, not a cold transaction.
+                                        <br /><br />
+                                        <span className="text-[#C13028]">Artue: Re-centering art around culture.</span>
+                                    </p>
                                 </motion.div>
                             </div>
                         </div>
@@ -203,26 +252,30 @@ export default function Hero() {
                         >
                             <div className="absolute inset-0 p-8 flex flex-col justify-center text-[#111111]">
                                 {/* Aligned to mirror the Manifesto block positioning above on the mirror axis */}
+                                {/* Slide reveal for Habitus content */}
                                 <motion.div
-                                    animate={{ y: hoverHabitus ? 20 : 0, opacity: hoverHabitus ? 0 : 1 }}
-                                    transition={{ duration: 0.4 }}
-                                    // Changed to justify-start and pt-12 to align with the bottom-aligned Manifesto block across the center axis
-                                    className="absolute inset-0 flex flex-col items-center justify-start pt-12 text-center pointer-events-none"
+                                    initial={{ y: "-100%" }}
+                                    animate={{ y: hoverHabitus ? "0%" : "-100%" }}
+                                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                                    className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-[#111111] text-[#F4F4F0] z-10"
                                 >
-                                    <h3 className="font-serif text-[28px] uppercase tracking-widest font-normal mb-8">Habitus</h3>
+                                    <p className="font-serif text-[11px] lg:text-xs leading-relaxed italic opacity-90 border-l px-4 border-[#E1A140]">
+                                        "A system of embodied dispositions... that organize the ways in which individuals perceive the social world."<br />
+                                        <span className="block mt-2 font-sans text-[9px] lg:text-[10px] uppercase tracking-widest text-[#E1A140] font-bold not-italic">— Pierre Bourdieu</span>
+                                    </p>
                                 </motion.div>
 
+                                {/* Static (unhovered) display */}
                                 <motion.div
-                                    initial={{ y: "80%", opacity: 0 }}
-                                    animate={{ y: hoverHabitus ? "0%" : "80%", opacity: hoverHabitus ? 1 : 0 }}
+                                    animate={{
+                                        y: hoverHabitus ? 40 : 0,
+                                        opacity: hoverHabitus ? 0 : 1
+                                    }}
                                     transition={{ duration: 0.4 }}
-                                    className="absolute inset-0 flex items-center justify-center p-6 text-center bg-[#111111] text-[#F4F4F0]"
+                                    className="absolute inset-0 flex flex-col items-center justify-start pt-12 text-center pointer-events-none"
                                 >
-                                    {/* Changed border color logic for blue to match */}
-                                    <p className="font-serif text-[11px] leading-relaxed italic opacity-90 border-l px-4 border-[#E1A140]">
-                                        "A system of embodied dispositions... that organize the ways in which individuals perceive the social world."<br />
-                                        <span className="block mt-2 font-sans text-[9px] uppercase tracking-widest text-[#E1A140] font-bold not-italic">— Pierre Bourdieu</span>
-                                    </p>
+                                    <p className="font-sans uppercase tracking-[0.2em] text-[10px] lg:text-xs border-b border-[#111111] pb-4 w-3/4 mx-auto font-bold opacity-90">Taste &<br />Distinction</p>
+                                    <h3 className="font-serif text-[28px] uppercase tracking-widest font-normal mt-6">Habitus</h3>
                                 </motion.div>
                             </div>
                         </div>
